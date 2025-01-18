@@ -2,6 +2,7 @@ import { useState, useContext} from 'react';
 import styles from './LogIn.module.css';
 import { useNavigate,Link } from 'react-router-dom';
 import { AuthContext } from "../AuthContext";
+import { ApiUtils } from "../../utils/apiUtils";
 
 function LogIn() {
     const [errorMessage, setErrorMessage] = useState('');
@@ -9,17 +10,13 @@ function LogIn() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
+    const apiUtils = new ApiUtils();
 
     const handleLogIn = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/users?username=${userName}&website=${password}`, {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(data => {
+        apiUtils.getItems(`users`, `username=${userName}&website=${password}`).then((data)=>{
                 if (data.length > 0){
-                    // localStorage.setItem("currentUser", JSON.stringify(data));
-                    login({"id":data[0].id,"name":data[0].name});
+                    login(data[0]);
                     navigate(`/home/users/${data[0].id}`);
                 }
                 else {
@@ -31,6 +28,7 @@ function LogIn() {
             })
             .catch(error => {
                 console.error('Error:', error);
+                alert('Error: ')
             });
     }
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import styles from './SignUp.module.css';
 // import ContinuationRegistration from '../ContinuationRegistration/ContinuationRegistration'
 import ContinuationRegistration from '../ContinuationRegistration/ContinuationRegistration'
+import { ApiUtils } from "../../utils/apiUtils";
 
 function SignUp() {
     const [errorMessage, setErrorMessage] = useState('');
@@ -10,6 +11,7 @@ function SignUp() {
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
     const [showRegistration, setShowRegistration] = useState(true);
+    const apiUtils = new ApiUtils();
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -18,21 +20,17 @@ function SignUp() {
             setErrorMessage('not verify password')
             return;
         }
-        ///לעשות בדיקה גם לסיסמא?
-        fetch(`http://localhost:3000/users?username=${userName}`, {
-            method: 'GET',
-        }).then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    setErrorMessage('Registration failed - enter other details');
-                    setuserName('');
-                    setPassword('');
-                    setVerifyPassword('');
-                }
-                else{
-                    setShowRegistration(false);
-                }
-            })
+        apiUtils.getItems(`users`, `username=${userName}`).then((data) => {
+            if (data.length > 0) {
+                setErrorMessage('Registration failed - enter other details');
+                setuserName('');
+                setPassword('');
+                setVerifyPassword('');
+            }
+            else {
+                setShowRegistration(false);
+            }
+        })
             .catch(error => {
                 console.error('Error:', error);
             });
@@ -68,7 +66,7 @@ function SignUp() {
                         type="password"
                         value={verifyPassword}
                         onChange={(e) => setVerifyPassword(e.target.value)}
-                        onPaste={(e)=>{ e.preventDefault()}} 
+                        onPaste={(e) => { e.preventDefault() }}
                         required
                         className={styles.input}
                     />
@@ -78,7 +76,7 @@ function SignUp() {
             <Link to="/login" className={styles.loginLink}> Have an account? Log in</Link>
             <div className={styles.errorMessage} >{errorMessage}</div>
 
-        </> : <ContinuationRegistration password={password} userName={userName}  />
+        </> : <ContinuationRegistration password={password} userName={userName} />
 
     );
 }

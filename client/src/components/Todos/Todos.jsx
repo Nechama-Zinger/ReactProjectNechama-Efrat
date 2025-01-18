@@ -43,17 +43,17 @@ function Todos() {
 
     const handleCheckboxChange = (e, idForUpdate) => {
         apiUtils.updateItem(idForUpdate, `todos`, { key: 'completed', content: e.target.checked })
-        // .then(() => {
-        setTodos((prevContent) =>
-            prevContent.map((todo) =>
-                todo.id === idForUpdate ? { ...todo, completed: e.target.checked } : todo
-            )
-        );
-        // })
-        // .catch((error) => {
-        //     console.error("Error updating item:", error);
-        //     alert("Failed to update item. Please try again.");
-        // });
+            .then(() => {
+                setTodos((prevContent) =>
+                    prevContent.map((todo) =>
+                        todo.id === idForUpdate ? { ...todo, completed: e.target.checked } : todo
+                    )
+                );
+            })
+            .catch((error) => {
+                console.error("Error updating item:", error);
+                alert("Failed to update item. Please try again.");
+            });
     };
 
     const handleUpdate = (idForUpdate) => {
@@ -92,22 +92,20 @@ function Todos() {
     };
 
     const conditionForFilteringBy = (todo) => {
-        if(searchValue!=""){
+        if (!searchValue || !filterBy) {
             if (filterBy === "title") {
                 return todo.title.includes(searchValue)
             } else if (filterBy === "id") {
                 return todo.id == searchValue;
             } else if (filterBy === "completed") {
                 return todo.completed == searchValue;
-            } else {
-                return true; // ללא מיון
             }
-            
-        }else {
+
+        } else {
             return true; // ללא מיון
         }
 
-        
+
         // סינון מורכב: רק משימות שהושלמו וכותרת כוללת מילה מסוימת
         // return todo[filterBy].includes(searchValue) === searchValue && todo.title.includes("important");
     };
@@ -150,6 +148,7 @@ function Todos() {
                     </label>
                     {filterBy && (
                         <input
+                            placeholder={`Search by ${filterBy}`}
                             type="text"
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}

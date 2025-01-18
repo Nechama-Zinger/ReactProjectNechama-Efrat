@@ -24,22 +24,21 @@ export class ApiUtils {
     }
       
   deleteItem = (category, idForDelete) => {
-    fetch(`${this.baseUrl}/${category}/${idForDelete}`, {
+    return fetch(`${this.baseUrl}/${category}/${idForDelete}`, {
       method: "DELETE",
-    })
+        })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Failed to delete item with ID ${idForDelete}`);
         }
-      })
-      .then(() => {
-       
-        // setState((prevState) => prevState.filter((item) => item.id !== id));
         console.log(`Item with ID ${idForDelete} deleted successfully`);
+
         return idForDelete;
+
       })
       .catch((error) => {
-        console.error("Error during deletion:", error);
+        throw new Error(error)
+        // console.error("Error during deletion:", error);
       });
   };
 
@@ -49,9 +48,7 @@ export class ApiUtils {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        [propToUpdate.key]: propToUpdate.content,
-      }),
+      body: JSON.stringify(propToUpdate),
     })
       .then((response) => {
         if (!response.ok) {
@@ -90,77 +87,10 @@ export class ApiUtils {
       })
       .catch((error) => {
         console.error('Error adding item:', error);
+        throw error; // חשוב לזרוק את השגיאה מחדש כדי שה-catch יתפוס אותה
       });
   };
 }
 
-// export const deleteItem = (id, url, setState) => {
-//   fetch(`${url}${id}`, {
-//     method: "DELETE",
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error(`Failed to delete item with ID ${id}`);
-//       }
-//     })
-//     .then(() => {
-//       setState((prevState) => prevState.filter((item) => item.id !== id));
-//       console.log(`Item with ID ${id} deleted successfully`);
-//     })
-//     .catch((error) => {
-//       console.error("Error during deletion:", error);
-//     });
-// };
-///export const updateItem = (id, url, setState, value) => {
 
-/* fetch(`${url}/${id}`, {
-   method: 'PUT', // מציין את סוג הבקשה
-   headers: {
-     'Content-Type': 'application/json',
-   },
-   body: JSON.stringify(value), // הנתונים שברצונך לעדכן
- })
-   .then((response) => {
-     if (!response.ok) {
-       throw new Error('Error updating the todo');
-     }
-     return response.json(); // מחזירים את התגובה
-   })
-   .then((data) => {
-     setState((prevState) => prevState.filter((item) => item.id !== id));
-     console.log('Todo updated:', data); // יכול לשדרג את הנתונים בסטייט כאן אם צריך
-   })
-   .catch((error) => {
-     console.error('Error:', error);
-   });
-//};*/
 
-// export default ApiUtils
-// const updateItem = (id, url, setData, key, updatedContent) => {
-
-//   fetch(`${url}${id}`, {
-//     method: "PATCH",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       [key]: updatedContent,
-//     }),
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error("Network response was not ok");
-//       }
-//       return response.json();
-//     })
-//     .then((data) => {
-//       setData((prevContent) =>
-//         prevContent.map((item) =>
-//           item.id === id ? { ...item, data } : item
-//         )
-//       );
-//     })
-//     .catch((error) => {
-//       console.error("Error updating:", error);
-//     });
-// };

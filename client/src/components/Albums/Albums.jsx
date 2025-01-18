@@ -10,7 +10,7 @@ function Albums() {
     useEffect(() => {
         fetch(`https://jsonplaceholder.typicode.com/users/${userId}/albums`)
             .then((response) => response.json())
-            .then((data) => setAlbums(data.slice(0, 5))); // מגביל ל-5 אלבומים
+            .then((data) => setAlbums(data)); // מגביל ל-5 אלבומים
     }, [userId]);
 
     return (
