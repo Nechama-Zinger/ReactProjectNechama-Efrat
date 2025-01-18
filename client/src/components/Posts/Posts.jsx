@@ -124,9 +124,9 @@ function Posts() {
         setSelectedPost(post.id === selectedPost?.id ? null : post);
     };
 
-    const handleViewComments = (postId) => {
-        navigate(`${postId}/comments`);
-    };
+    // const handleViewComments = (postId) => {
+    //     navigate(`${postId}/comments`);
+    // };
 
     return (
         <>
@@ -244,7 +244,12 @@ function Posts() {
 
                                             </>
                                         )}
-                                        <button onClick={(e) => { e.stopPropagation(); handleViewComments(post.id); }}>
+                                        <button onClick={(e) => { e.stopPropagation();
+                                             navigate(`${post.id}/comments`,{ state: post  });
+
+                                            //  handleViewComments(post.id); 
+                                            }
+                                             }>
                                             View Comments
                                         </button>
                                     </div>

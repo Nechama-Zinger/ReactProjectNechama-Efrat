@@ -1,0 +1,97 @@
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.photosList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.photoItem {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  position: relative;
+}
+
+.photoItem h4 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.photoItem p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+.photoActions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.photoActions button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.photoActions button:hover {
+  background-color: #0056b3;
+}
+
+.photoActions button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.addAlbum {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.addAlbum h3 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.addAlbum textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.addAlbum button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.addAlbum button:hover {
+  background-color: #218838;
+}

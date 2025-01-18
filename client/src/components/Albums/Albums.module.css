@@ -7,32 +7,12 @@
     border-radius: 8px;
 }
 
-.postDetails {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-.postDetails h3 {
-    margin: 0 0 10px;
-    font-size: 1.5rem;
-    color: #b15d5d;
-}
-
-.postDetails p {
-    margin: 0;
-    font-size: 1rem;
-    color: #666;
-}
-
-.commentsList {
+.albumsList {
     list-style-type: none;
     padding: 0;
 }
 
-.commentItem {
+.albumItem {
     margin-bottom: 20px;
     padding: 15px;
     background-color: #ffffff;
@@ -41,25 +21,25 @@
     position: relative;
 }
 
-.commentItem h4 {
+.albumItem h4 {
     margin: 0 0 10px;
     font-size: 1.2rem;
     color: #333;
 }
 
-.commentItem p {
+.albumItem p {
     margin: 5px 0;
     font-size: 1rem;
     color: #666;
 }
 
-.commentActions {
+.albumActions {
     margin-top: 10px;
     display: flex;
     gap: 10px;
 }
 
-.commentActions button {
+.albumActions button {
     padding: 8px 12px;
     border: none;
     background-color: #007bff;
@@ -69,16 +49,16 @@
     font-size: 0.9rem;
 }
 
-.commentActions button:hover {
+.albumActions button:hover {
     background-color: #0056b3;
 }
 
-.commentActions button:disabled {
+.albumActions button:disabled {
     background-color: #ddd;
     cursor: not-allowed;
 }
 
-.addComment {
+.addAlbum {
     margin-top: 20px;
     padding: 15px;
     background-color: #ffffff;
@@ -86,13 +66,13 @@
     border-radius: 8px;
 }
 
-.addComment h3 {
+.addAlbum h3 {
     margin: 0 0 10px;
     font-size: 1.5rem;
     color: #333;
 }
 
-.addComment textarea {
+.addAlbum textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -102,7 +82,7 @@
     margin-bottom: 10px;
 }
 
-.addComment button {
+.addAlbum button {
     padding: 8px 12px;
     border: none;
     background-color: #28a745;
@@ -112,6 +92,6 @@
     font-size: 0.9rem;
 }
 
-.addComment button:hover {
+.addAlbum button:hover {
     background-color: #218838;
 }

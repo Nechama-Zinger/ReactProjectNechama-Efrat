@@ -36,7 +36,6 @@ function Todos() {
 
     useEffect(() => {
         apiUtils.getItems(`todos`, `userId=${user.id}`).then(todos => {
-            console.log(todos);
             setTodos(todos);
         });
     }, []);
@@ -92,7 +91,7 @@ function Todos() {
     };
 
     const conditionForFilteringBy = (todo) => {
-        if (!searchValue || !filterBy) {
+        if (searchValue != "" && filterBy != "") {
             if (filterBy === "title") {
                 return todo.title.includes(searchValue)
             } else if (filterBy === "id") {
