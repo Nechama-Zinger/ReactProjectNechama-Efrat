@@ -20,6 +20,7 @@ function Posts() {
     const [searchValue, setSearchValue] = useState(""); // ערך חיפוש
     const [filterBy, setFilterBy] = useState(""); // קריטריון חיפוש
     const [error, setError] = useState(""); // קריטריון חיפוש
+    const [editingPost, setEditingPost] = useState(null);
 
     const [newPost, setNewPost] = useState({ title: "", body: "" }); // פוסט חדש
     const apiUtils = new ApiUtils();
@@ -60,7 +61,7 @@ function Posts() {
                     else {
                         setPosts([]);
                         setError("user not found")
-                        
+
                     }
                 })
                 .catch((error) => console.error("Error fetching user:", error));
@@ -87,6 +88,7 @@ function Posts() {
     const handleDeletePost = (postId) => {
         apiUtils.deleteItem("posts", postId)
             .then(() => {
+
                 setPosts((prev) => prev.filter((post) => post.id !== postId));
             });
     };
@@ -105,6 +107,13 @@ function Posts() {
         }
 
     };
+    // const handleDeletePost = (postId) => {
+    //     apiUtils.deleteItem("posts", postId)
+    //         .then(() => {
+    //             setPosts((prev) => prev.filter((post) => post.id !== postId));
+    //         });
+    // };
+
     const handleUpdatePost = () => {
         const newFilteredObject = Object.fromEntries(
             Object.entries(updatedData).filter(([key, value]) => value !== "")
@@ -135,14 +144,14 @@ function Posts() {
                 <h2>{viewType}</h2>
                 <div className={styles.filters}>
                     <button onClick={() => { setViewType("myPosts"); setError(""); setSelectedUser("") }}>My Posts</button>
-                    <button onClick={() => { setViewType("allPosts"); setError(""); setSelectedUser("")}}>All Posts</button>
+                    <button onClick={() => { setViewType("allPosts"); setError(""); setSelectedUser("") }}>All Posts</button>
                     <label>
                         <button onClick={() => setViewType("searchUserPosts")}>Select Posts Of Specific User</button>
                         <input
                             type="text"
                             placeholder={`Search by user name`}
                             value={selectedUser}
-                            onChange={(e) =>{ setSelectedUser(e.target.value); setError("");}}
+                            onChange={(e) => { setSelectedUser(e.target.value); setError(""); }}
                             style={{ marginTop: "1rem" }}
                         />
                     </label>
@@ -203,53 +212,111 @@ function Posts() {
                                 onClick={() => handleSelectPost(post)}
                             >
                                 <div>
-                                    <strong>ID:</strong> {post.id} | <strong>Title:</strong> {post.title}
+                                    <strong>ID:</strong> {post.id} |
+                                    { editingPost == post.id ?(
+                                            <input
+                                                type="text"
+                                                placeholder="Update Title"
+                                                defaultValue={post.title}
+                                                onChange={(e) => {
+                                                    setupdatedData((prev) => ({ ...prev, title: e.target.value }))
+                                                }
+                                                }
+                                                onClick={(e) => e.stopPropagation()} // כדי למנוע פתיחה/סגירה בלחיצה על הקלט
+                                            />
+                                        ):(
+                                            <strong>Title:</strong> {post.title}
+
+                                        )
+
+                                    }
                                 </div>
                                 {selectedPost?.id === post.id && (
                                     <div className={styles.postDetails}>
-                                        <p>{post.body}</p>
+
+
+                                        {/* <p>{post.body}</p> */}
+
                                         {post.userId == user.id && (
                                             <>
-                                                <button onClick={(e) => { e.stopPropagation(); handleDeletePost(post.id); }}>Delete</button>
-                                                <label>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Update Title"
-                                                        defaultValue={post.title}
-                                                        onChange={(e) => {
-                                                            setupdatedData((prev) => ({ ...prev, title: e.target.value }))
-                                                        }
-                                                        }
-                                                        onClick={(e) => e.stopPropagation()} // כדי למנוע פתיחה/סגירה בלחיצה על הקלט
-                                                    />
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Update Body"
-                                                        defaultValue={post.body}
-                                                        onChange={(e) => {
-                                                            setupdatedData((prev) => ({ ...prev, body: e.target.value }))                                                        // handleUpdatePost("body", e.target.value)
-                                                            // handleUpdatePost("title", e.target.value)
+                                                {/* <button onClick={(e) => { e.stopPropagation(); handleDeletePost(post.id); }}>Delete</button> */}
+                                                {editingPost === post.id ? (
+                                                    <>
 
-                                                        }
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Update Body"
+                                                            defaultValue={post.body}
+                                                            onChange={(e) => {
+                                                                setupdatedData((prev) => ({ ...prev, body: e.target.value }))                                                        // handleUpdatePost("body", e.target.value)
+                                                                // handleUpdatePost("title", e.target.value)
 
-                                                        }
-                                                        onClick={(e) => e.stopPropagation()} // כדי למנוע פתיחה/סגירה בלחיצה על הקלט
-                                                    />
+                                                            }
+
+                                                            }
+                                                            onClick={(e) => e.stopPropagation()} // כדי למנוע פתיחה/סגירה בלחיצה על הקלט
+                                                        />
+                                                    </>
+                                                ) : (<p>{post.body}</p>
+                                                )}
+                                                <div >
+                                                    {editingPost === post.id ? (
+                                                        <>
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation()
+                                                                    handleUpdatePost(post.id, post.title)
+                                                                }
+
+                                                                }
+                                                            >
+                                                                Save
+                                                            </button>
+                                                            <button onClick={(e) => {
+                                                                setEditingPost(null);
+                                                                e.stopPropagation()
+                                                            }}>
+                                                                Cancel
+                                                            </button>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <button onClick={(e) => {
+                                                                e.stopPropagation();
+
+                                                                setEditingPost(post.id);
+                                                            }}>
+                                                                Edit
+                                                            </button>
+                                                            <button onClick={(e) => {
+                                                                e.stopPropagation()
+
+                                                                handleDeletePost(post.id);
+                                                            }}>
+                                                                Delete
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                </div>
+                                                {/* <label>
                                                     <button onClick={(e) => {
+                                                        setEditingAlbum(album.id)
                                                         e.stopPropagation();
                                                         handleUpdatePost()
 
                                                     }}>✏️</button>
-                                                </label>
+                                                </label> */}
+
 
                                             </>
                                         )}
-                                        <button onClick={(e) => { e.stopPropagation();
-                                             navigate(`${post.id}/comments`,{ state: post  });
+                                        <button onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(`${post.id}/comments`, { state: post });
 
                                             //  handleViewComments(post.id); 
-                                            }
-                                             }>
+                                        }
+                                        }>
                                             View Comments
                                         </button>
                                     </div>
