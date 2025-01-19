@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext} from 'react';
+import { useContext } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 
@@ -11,12 +11,13 @@ function Navbar() {
         <nav style={styles.navbar}>
             <div style={styles.userName}>{user.name}</div>
             <div style={styles.links}>
+                <Link to={`/home/users/${user.id}`} style={styles.link}>Home</Link>
                 <Link to={`/home/users/${user.id}/info`} style={styles.link}>Info</Link>
                 <Link to={`/home/users/${user.id}/todos`} style={styles.link}>Todos</Link>
-                <Link to={`/home/users/${user.id}/posts`}style={styles.link}>Posts</Link>
+                <Link to={`/home/users/${user.id}/posts`} style={styles.link}>Posts</Link>
                 <Link to={`/home/users/${user.id}/albums`} style={styles.link}>Albums</Link>
             </div>
-            <button onClick={()=>{logout()}} style={styles.logoutButton}>Log Out</button>
+            <button onClick={() => { logout() }} style={styles.logoutButton}>Log Out</button>
         </nav>
     );
 }

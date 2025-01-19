@@ -1,39 +1,29 @@
-import React, { useState, useEffect,useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../Navbar/Navbar";
 import { ApiUtils } from "../../utils/apiUtils";
 import { AuthContext } from "../AuthContext";
 import Select from "react-select";
+import Album from "../Album/Album";
 
-import styles from "./Albums.module.css";
+// import styles from "./Albums.module.css";
 
 function Albums() {
     const [albums, setAlbums] = useState([]);
     const apiUtils = new ApiUtils();
-    const { user } = useContext(AuthContext); // משתמש פעיל
-    const [newAlbum, setNewAlbum] = useState(""); // פוסט חדש
+    const { user } = useContext(AuthContext);
+    const [newAlbum, setNewAlbum] = useState("");
     const [searchValue, setSearchValue] = useState("");
-    const [editingAlbum, setEditingAlbum] = useState(null);
-    const [filterBy, setFilterBy] = useState(""); // ברירת מחדל: מיון לפי כותרת
+    const [filterBy, setFilterBy] = useState("");
     const filterOptions = [
         { value: "", label: "none" },
         { value: "title", label: "Title" },
         { value: "id", label: "ID" },
     ];
+
     useEffect(() => {
-        apiUtils.getItems("albums",`userId=${user.id}`).then((data) => setAlbums(data));
+        apiUtils.getItems("albums", `userId=${user.id}`).then((data) => setAlbums(data));
     }, []);
-    const handleEditAlbum = (albumId, newContent) => {
-        const updateData = {title:newContent };
-        apiUtils.updateItem(albumId, "albums", updateData).then((updatedAlbum) => {
-            if (updatedAlbum) {
-                setAlbums((prev) =>
-                    prev.map((album) => (album.id === updatedAlbum.id ? updatedAlbum : album))
-                );
-                setEditingAlbum(null);
-            }
-        });
-    };
+
     const handleAddAlbum = () => {
         const albumData = {
             userId: user.id,
@@ -45,30 +35,31 @@ function Albums() {
         setNewAlbum("");
     };
 
-    const handleDeleteAlbum = (albumId) => {
-        apiUtils.deleteItem("albums", albumId)
-            .then(() => {
-                setAlbums((prev) => prev.filter((album) => album.id !== albumId));
-            });
-    };
-    const conditionForFilteringBy = (album) => {
-        if (searchValue != "" && filterBy != "") {
-            if (filterBy === "title") {
-                return album.title.includes(searchValue)
-            } else if (filterBy === "id") {
-                return album.id == searchValue;
+    const handleUpdateAlbum = (albumId, newTitle) => {
+        const updateData = { title: newTitle };
+        apiUtils.updateItem(albumId, "albums", updateData).then((updatedAlbum) => {
+            if (updatedAlbum) {
+                setAlbums((prev) =>
+                    prev.map((album) => (album.id === updatedAlbum.id ? updatedAlbum : album))
+                );
             }
-
-        } else {
-            return true; // ללא מיון
-        }
-
-
-        // סינון מורכב: רק משימות שהושלמו וכותרת כוללת מילה מסוימת
-        // return todo[filterBy].includes(searchValue) === searchValue && todo.title.includes("important");
+        });
     };
-    
-  
+
+    const handleDeleteAlbum = (albumId) => {
+        apiUtils.deleteItem("albums", albumId).then(() => {
+            setAlbums((prev) => prev.filter((album) => album.id !== albumId));
+        });
+    };
+
+    const conditionForFilteringBy = (album) => {
+        if (searchValue !== "" && filterBy !== "") {
+            if (filterBy === "title") return album.title.includes(searchValue);
+            if (filterBy === "id") return album.id == searchValue;
+        }
+        return true;
+    };
+
     return (
         <>
             <Navbar />
@@ -95,61 +86,23 @@ function Albums() {
                     )}
                 </label>
                 <div>
-                    <h3>Add a Album</h3>
+                    <h3>Add an Album</h3>
                     <input
                         type="text"
                         placeholder="Title"
                         value={newAlbum}
-                        onChange={(e) =>
-                            setNewAlbum(e.target.value)
-                        }
+                        onChange={(e) => setNewAlbum(e.target.value)}
                     />
                     <button onClick={handleAddAlbum}>Add Album</button>
                 </div>
                 <ul>
-
                     {albums.filter(conditionForFilteringBy).map((album) => (
-                        <li key={album.id}>
-                            {editingAlbum === album.id ? (
-                                <textarea
-                                    value={album.title}
-                                    onChange={(e) =>
-                                        setAlbums((prev) =>
-                                            prev.map((c) =>
-                                                c.id === album.id ? { ...c, title: e.target.value } : c
-                                            )
-                                        )
-                                    }
-                                />
-                            ) : (
-                                <Link to={`${album.id}/photos`}state={album.title}>{album.title}</Link>
-                            )}
-                            <div className={styles.AlbumActions}>
-                                {editingAlbum === album.id ? (
-                                    <>
-                                        <button
-                                            onClick={() =>
-                                                handleEditAlbum(album.id, album.title)
-                                            }
-                                        >
-                                            Save
-                                        </button>
-                                        <button onClick={() => setEditingAlbum(null)}>
-                                            Cancel
-                                        </button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <button onClick={() => setEditingAlbum(album.id)}>
-                                            Edit
-                                        </button>
-                                        <button onClick={() => handleDeleteAlbum(album.id)}>
-                                            Delete
-                                        </button>
-                                    </>
-                                )}
-                            </div>
-                        </li>
+                        <Album
+                            key={album.id}
+                            album={album}
+                            onUpdate={handleUpdateAlbum}
+                            onDelete={handleDeleteAlbum}
+                        />
                     ))}
                 </ul>
             </div>
