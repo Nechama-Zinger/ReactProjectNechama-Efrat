@@ -99,7 +99,9 @@ function Todos() {
             } else if (filterBy === "id") {
                 return todo.id == searchValue;
             } else if (filterBy === "completed") {
-                return todo.completed == searchValue;
+                console.log(todo.completed)
+                console.log(searchValue)
+                return todo.completed === (searchValue === "true");
             }
 
         } else {
@@ -148,16 +150,42 @@ function Todos() {
                             defaultValue={filterOptions.find((option) => option.value === filterBy)}
                         />
                     </label>
+                    <div>
+                        {filterBy && filterBy === "completed" ? (
+                            <div style={{ marginTop: "1rem" }}>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="completedFilter"
+                                        value="true"
+                                        onChange={(e) => setSearchValue(e.target.value)} // הערך נשמר כמחרוזת
+                                        checked={searchValue === "true"}
+                                    />
+                                    Completed
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="completedFilter"
+                                        value="false"
+                                        onChange={(e) => setSearchValue(e.target.value)} // הערך נשמר כמחרוזת
+                                        checked={searchValue === "false"} />
+                                    Not Completed
+                                </label>
+                            </div>
+                        ) : (
+                            filterBy && (
+                                <input
+                                    placeholder={`Search by ${filterBy}`}
+                                    type="text"
+                                    value={searchValue}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                    style={{ marginTop: "1rem" }}
+                                />
+                            )
+                        )}
+                    </div>
 
-                    {filterBy && (
-                        <input
-                            placeholder={`Search by ${filterBy}`}
-                            type="text"
-                            value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
-                            style={{ marginTop: "1rem" }}
-                        />
-                    )}
                 </div>
             </div>
 
