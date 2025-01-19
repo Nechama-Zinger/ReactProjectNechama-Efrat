@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
-import { AuthContext } from "../AuthContext";
-import { ApiUtils } from "../../utils/apiUtils";
-import Navbar from "../Navbar/Navbar";
+import { AuthContext } from "./AuthContext";
+import { ApiUtils } from "../utils/apiUtils";
+import Navbar from "./Navbar";
 import Select from "react-select";
 // import { Autocomplete, TextField, Checkbox } from "@mui/material";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../components/Posts/Posts.jsx";
+import styles from "../styles/Posts.module.css";
 
 function Post({ post, user, selectedPost, setSelectedPost, editingPost, setEditingPost, handleUpdatePost, handleDeletePost, setUpdatedData }) {
     const navigate = useNavigate();

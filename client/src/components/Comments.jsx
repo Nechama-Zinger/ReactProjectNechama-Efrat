@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
-import { ApiUtils } from "../../utils/apiUtils";
-import styles from "./Comments.module.css";
-import Navbar from "../Navbar/Navbar";
+import { AuthContext } from "./AuthContext";
+import { ApiUtils } from "../utils/apiUtils";
+import styles from "../styles/Comments.module.css";
+import Navbar from "./Navbar";
 
 function Comments() {
   const { postId } = useParams();

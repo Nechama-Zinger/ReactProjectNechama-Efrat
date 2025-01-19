@@ -1,8 +1,8 @@
 import { useState, useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './ContinuationRegistration.module.css';
-import { AuthContext } from "../AuthContext";
-import { ApiUtils } from "../../utils/apiUtils";
+import styles from '../styles/ContinuationRegistration.module.css';
+import { AuthContext } from "./AuthContext";
+import { ApiUtils } from "../utils/apiUtils";
 
 function ContinuationRegistration(props) {
     const navigate = useNavigate();

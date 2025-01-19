@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "../Albums/Albums.module.css";
+import styles from "../styles/Albums.module.css";
 
 function Album({ album, onUpdate, onDelete }) {
     const [isEditing, setIsEditing] = useState(false);

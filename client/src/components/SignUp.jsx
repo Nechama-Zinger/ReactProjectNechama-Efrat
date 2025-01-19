@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
-import styles from './SignUp.module.css';
+import styles from '../styles/SignUp.module.css';
 // import ContinuationRegistration from '../ContinuationRegistration/ContinuationRegistration'
-import ContinuationRegistration from '../ContinuationRegistration/ContinuationRegistration'
-import { ApiUtils } from "../../utils/apiUtils";
+import ContinuationRegistration from './ContinuationRegistration'
+import { ApiUtils } from "../utils/apiUtils";
 
 function SignUp() {
     const [errorMessage, setErrorMessage] = useState('');

@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
-import { ApiUtils } from "../../utils/apiUtils";
-import styles from "./Photos.module.css"
+import Navbar from "./Navbar";
+import { ApiUtils } from "../utils/apiUtils";
+import styles from "../styles/Photos.module.css"
 
 const LIMIT = 10; 
 

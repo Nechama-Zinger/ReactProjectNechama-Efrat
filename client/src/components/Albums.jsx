@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import Navbar from "../Navbar/Navbar";
-import { ApiUtils } from "../../utils/apiUtils";
-import { AuthContext } from "../AuthContext";
+import Navbar from "./Navbar";
+import { ApiUtils } from "../utils/apiUtils";
+import { AuthContext } from "./AuthContext";
 import Select from "react-select";
-import Album from "../Album/Album";
+import Album from "./Album.jsx";
 
 // import styles from "./Albums.module.css";
 

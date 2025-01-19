@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import Navbar from "../Navbar/Navbar";
-import { AuthContext } from "../AuthContext";
-import { ApiUtils } from "../../utils/apiUtils";
+import Navbar from "./Navbar.jsx";
+import { AuthContext } from "./AuthContext.jsx";
+import { ApiUtils } from "../utils/apiUtils.js";
 import Select from "react-select";
-import Post from '../Post.jsx'
-import styles from "./Posts.module.css";
+import Post from './Post.jsx'
+import styles from "../styles/Posts.module.css";
 
 
 function Posts() {

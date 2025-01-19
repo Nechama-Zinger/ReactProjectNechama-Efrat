@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import Navbar from "../Navbar/Navbar";
-import { AuthContext } from "../AuthContext";
+import Navbar from "./Navbar";
+import { AuthContext } from "./AuthContext";
 
 function Info() {
     const { user } = useContext(AuthContext);

@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
-import styles from './LogIn.module.css';
+import styles from '../styles/LogIn.module.css';
 import { useNavigate, Link } from 'react-router-dom';
-import { AuthContext } from "../AuthContext";
-import { ApiUtils } from "../../utils/apiUtils";
+import { AuthContext } from "./AuthContext";
+import { ApiUtils } from "../utils/apiUtils";
 
 function LogIn() {
     const [errorMessage, setErrorMessage] = useState('');

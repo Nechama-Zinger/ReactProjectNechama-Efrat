@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "./Navbar";
 
 function Home() {
   // const [user, setUser] = useState(null);

@@ -1,15 +1,15 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
-import './App.css';
-import Login from './components/Login/Login';
-import SignUp from './components/SignUp/SignUp';
-import Home from './components/Home/Home';
-import Todos from './components/Todos/Todos';
-import Posts from './components/Posts/Posts';
-import Albums from './components/Albums/Albums';
-import Photos from './components/Photos/Photos';
-import Comments from './components/Comments/Comments'; 
-import Info from './components/Info/Info';
+import './styles/App.css';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import Home from './components/Home';
+import Todos from './components/Todos';
+import Posts from './components/Posts';
+import Albums from './components/Albums';
+import Photos from './components/Photos';
+import Comments from './components/Comments'; 
+import Info from './components/Info';
 import NotFound from './components/NotFound';
 
 import AuthProvider, { AuthContext } from './components/AuthContext';
