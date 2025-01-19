@@ -111,7 +111,7 @@ function Albums() {
                     {albums.filter(conditionForFilteringBy).map((album) => (
                         <li key={album.id}>
                             {editingAlbum === album.id ? (
-                                <textarea
+                                <input
                                     value={album.title}
                                     onChange={(e) =>
                                         setAlbums((prev) =>

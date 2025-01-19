@@ -10,7 +10,7 @@ function Comments() {
   const { user } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   // const [postDetails, setPostDetails] = useState(null);
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState({ title: "", body: "" });
   const [editingComment, setEditingComment] = useState(null);
   const apiUtils = new ApiUtils();
   const location = useLocation();
@@ -29,14 +29,14 @@ function Comments() {
   const handleAddComment = () => {
     const commentData = {
       postId: parseInt(postId, 10),
-      name: user.name,
       email: user.email,
-      body: newComment,
+      name: newComment.title,
+      body: newComment.body,
     };
     apiUtils.addItem("comments", commentData).then((newComment) => {
       if (newComment) {
         setComments((prev) => [...prev, newComment]);
-        setNewComment("");
+        setNewComment({ title: "", body: "" });
       }
     });
   };
@@ -81,20 +81,36 @@ function Comments() {
         <ul className={styles.commentsList}>
           {comments.map((comment) => (
             <li key={comment.id} className={styles.commentItem}>
-              <h4>{comment.name}</h4>
               {editingComment === comment.id ? (
-                <textarea
-                  value={comment.body}
+                <><input
+                  value={comment.name}
                   onChange={(e) =>
                     setComments((prev) =>
                       prev.map((c) =>
-                        c.id === comment.id ? { ...c, body: e.target.value } : c
+                        c.id === comment.id ? { ...c, name: e.target.value } : c
                       )
                     )
                   }
                 />
+                <br/>
+                  <input
+                    value={comment.body}
+                    onChange={(e) =>
+                      setComments((prev) =>
+                        prev.map((c) =>
+                          c.id === comment.id ? { ...c, body: e.target.value } : c
+                        )
+                      )
+                    }
+                  />
+                </>
+
+
               ) : (
-                <p>{comment.body}</p>
+                <>
+                  <h4>{comment.name}</h4>
+                  <p>{comment.body}</p>
+                </>
               )}
               <p>
                 <strong>{comment.email}</strong>
@@ -133,10 +149,14 @@ function Comments() {
         <div className={styles.addComment}>
           <h3>Add a Comment</h3>
           <textarea
-            placeholder="Write your comment..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Write your title..."
+            value={newComment.title}
+            onChange={(e) => setNewComment((prev) => ({ ...prev, title: e.target.value }))}
           />
+          <textarea
+            placeholder="Write your comment..."
+            value={newComment.body}
+            onChange={(e) => setNewComment((prev) => ({ ...prev, body: e.target.value }))} />
           <button onClick={handleAddComment}>Add Comment</button>
         </div>
       </div>
