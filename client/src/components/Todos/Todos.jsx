@@ -12,6 +12,7 @@ function Todos() {
     const [updatedTask, setUpdatedTask] = useState('')
     const [searchValue, setSearchValue] = useState("");
     const [sortBy, setSortBy] = useState("");
+    const [isEditing, setIsEditing] = useState(null); // לא לערוך אף משימה בהתחלה
     const [filterBy, setFilterBy] = useState(""); // ברירת מחדל: מיון לפי כותרת
     const [newTask, setNewTask] = useState({
         userId: user.id,
@@ -42,10 +43,10 @@ function Todos() {
 
     const handleCheckboxChange = (e, idForUpdate) => {
         apiUtils.updateItem(idForUpdate, `todos`, { completed: e.target.checked })
-            .then(() => {
+            .then((updatedItem) => {
                 setTodos((prevContent) =>
                     prevContent.map((todo) =>
-                        todo.id === idForUpdate ? { ...todo, completed: e.target.checked } : todo
+                        todo.id === idForUpdate ? updatedItem : todo
                     )
                 );
             })
@@ -64,6 +65,7 @@ function Todos() {
                         todo.id === idForUpdate ? updatedItem : todo
                     )
                 );
+                setIsEditing(null)
             })
             .catch((error) => {
                 console.error("Error updating item:", error);
@@ -129,10 +131,11 @@ function Todos() {
                     Sort:
                     <Select
                         options={sortOptions}
-                        onChange={(e) => { setSortBy(e.value) }}
+                        onChange={(e) => setSortBy(e.value)}
                         defaultValue={sortOptions.find((option) => option.value === sortBy)}
                     />
                 </label>
+
                 <div>
                     <label>
                         Search:
@@ -145,6 +148,7 @@ function Todos() {
                             defaultValue={filterOptions.find((option) => option.value === filterBy)}
                         />
                     </label>
+
                     {filterBy && (
                         <input
                             placeholder={`Search by ${filterBy}`}
@@ -155,8 +159,8 @@ function Todos() {
                         />
                     )}
                 </div>
-                {/* <button onClick={handleSearch} style={{ marginTop: "1rem" }}> Search </button> */}
             </div>
+
             <div>
                 <h2>Todos</h2>
                 <ul>
@@ -166,46 +170,68 @@ function Todos() {
                         .map((todo) => (
                             <li key={todo.id}>
                                 {todo.id}:
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={todo.completed}
-                                        onChange={(e) => handleCheckboxChange(e, todo.id)}
-                                    />
-                                    {todo.title}
-                                </label>
-                                <button onClick={() => handleDelete(todo.id)}>🗑️</button>
-                                <label >
-                                    <button onClick={() => handleUpdate(todo.id)}>✏️</button>
-                                    <input
-                                        type="text"
-                                        onChange={(e) => setUpdatedTask(e.target.value)}
-                                        required
-                                    />
-
-                                </label>
+                                <input
+                                    type="checkbox"
+                                    checked={todo.completed}
+                                    onChange={(e) => handleCheckboxChange(e, todo.id)}
+                                />
+                                {isEditing === todo.id ? (
+                                    // <input
+                                    //     type="text"
+                                    //     value={updatedTask}
+                                    //     onChange={(e) => setUpdatedTask(e.target.value)}
+                                    //     onBlur={() => handleUpdate(todo.id)} // יכול להסתיים בשדה
+                                    //     autoFocus
+                                    // />
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Update title"
+                                            defaultValue={todo.title}
+                                            onChange={(e) => setUpdatedTask(e.target.value)}
+                                        />
+                                    </>
+                                ) : (
+                                    <span>{todo.title}</span>
+                                )}
+                                <div>
+                                    {isEditing === todo.id ? (
+                                        <>
+                                            <button onClick={() => handleUpdate(todo.id)}>
+                                                Save
+                                            </button>
+                                            <button onClick={() => setIsEditing(null)}>
+                                                Cancel
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button onClick={() => setIsEditing(todo.id)}>
+                                                ✏️
+                                            </button>
+                                            <button onClick={() => handleDelete(todo.id)}>
+                                                🗑️
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
+                                {/* <button onClick={() => handleDelete(todo.id)}>🗑️</button>
+                                <button onClick={() => setIsEditing(todo.id)}>✏️</button> */}
                             </li>
                         ))}
                 </ul>
-                <label >
-                    <button onClick={() => { handleAddition() }}>➕</button>
-                    <input
-                        type="text"
-                        value={newTask.title}
-                        onChange={(e) => {
-                            setNewTask((prevTask) => ({
-                                ...prevTask,
-                                title: e.target.value
-                            }));
-                        }}
-                        required
-                    />
 
-                </label>
-            </div >
-
+                <button onClick={handleAddition}>➕</button>
+                <input
+                    type="text"
+                    value={newTask.title}
+                    onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                    required
+                />
+            </div>
         </>
     );
+
 }
 
 export default Todos;

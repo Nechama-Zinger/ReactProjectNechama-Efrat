@@ -122,7 +122,7 @@ function Photos() {
                 style={{ width: "100%", borderRadius: "8px" }}
               />
               {editingPhoto === photo.id ? (
-                <textarea
+                <input
                   value={photo.title}
                   onChange={(e) =>
                     setPhotos((prev) =>
