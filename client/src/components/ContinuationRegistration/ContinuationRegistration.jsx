@@ -2,11 +2,13 @@ import { useState, useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './ContinuationRegistration.module.css';
 import { AuthContext } from "../AuthContext";
+import { ApiUtils } from "../../utils/apiUtils";
 
 function ContinuationRegistration(props) {
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
     // const [errorMessage, setErrorMessage] = useState('');
+    const apiUtils = new ApiUtils();
 
     const [userData, setUserData] = useState({
         name: '',
@@ -44,17 +46,13 @@ function ContinuationRegistration(props) {
 
     const handleSignUp = (e) => {
         e.preventDefault();
-
-        fetch(`http://localhost:3000/users`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData)
-        }).then(response => response.json())
+        apiUtils.addItem("users",userData)         
             .then(data => {
                 console.log('Success:', data);
-                login({"id":data.id,"name":data.name});
+                login({
+                    id: data.id,
+                    name: data.name,
+                    email: data.email});
                 navigate(`/home/users/${data.id}`);
             })
             .catch((error) => {

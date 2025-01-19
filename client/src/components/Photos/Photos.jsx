@@ -5,22 +5,20 @@ import Navbar from "../Navbar/Navbar";
 import { ApiUtils } from "../../utils/apiUtils";
 import styles from "./Photos.module.css"
 
-const LIMIT = 10; // מספר התמונות בכל טעינה
+const LIMIT = 10; 
 
 function Photos() {
-  const { albumId } = useParams(); // שימוש בפרמטרים מה-URL
+  const { albumId } = useParams(); 
   const apiUtils = new ApiUtils();
-  const [newPhoto, setNewPhoto] = useState({ title: "", url: "" }) // פוסט חדש
-  const [photos, setPhotos] = useState([]); // רשימת התמונות
-  const [page, setPage] = useState(0); // מספר הדף הנוכחי (מתחיל מ-0)
-  const [isLoading, setIsLoading] = useState(false); // מצב טעינה
+  const [newPhoto, setNewPhoto] = useState({ title: "", url: "" }) 
+  const [photos, setPhotos] = useState([]); 
+  const [page, setPage] = useState(0); 
+  const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true); // האם יש עוד תמונות לטעון
   const [editingPhoto, setEditingPhoto] = useState(null);
   const location = useLocation()|| {};
-  // const { post } = location.state || {};
-  // פונקציה לטעינת התמונות
   const fetchPhotos = () => {
-    if (isLoading || !hasMore) return; // מניעת בקשות כפולות או טעינה מעבר למה שיש
+    if (isLoading || !hasMore) return;
     setIsLoading(true); // עדכון מצב הטעינה
     try {
       apiUtils.getItems(`photos`, `albumId=${albumId}&_start=${page * LIMIT}&_limit=${LIMIT}`).then((data) => {

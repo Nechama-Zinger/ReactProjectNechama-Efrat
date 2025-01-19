@@ -8,7 +8,7 @@ import Todos from './components/Todos/Todos';
 import Posts from './components/Posts/Posts';
 import Albums from './components/Albums/Albums';
 import Photos from './components/Photos/Photos';
-import Comments from './components/Comments/Comments'; // אם זה לא נמצא כבר
+import Comments from './components/Comments/Comments'; 
 import Info from './components/Info/Info';
 import NotFound from './components/NotFound';
 
@@ -44,5 +44,4 @@ const PrivateRoute = ({ children }) => {
 };
 
 export default App
-
 

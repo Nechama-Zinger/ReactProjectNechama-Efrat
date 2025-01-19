@@ -1,6 +1,6 @@
-import { useState, useContext} from 'react';
+import { useState, useContext } from 'react';
 import styles from './LogIn.module.css';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from "../AuthContext";
 import { ApiUtils } from "../../utils/apiUtils";
 
@@ -14,18 +14,22 @@ function LogIn() {
 
     const handleLogIn = (e) => {
         e.preventDefault();
-        apiUtils.getItems(`users`, `username=${userName}&website=${password}`).then((data)=>{
-                if (data.length > 0){
-                    login(data[0]);
-                    navigate(`/home/users/${data[0].id}`);
-                }
-                else {
-                    setErrorMessage("try Again");
-                    setUserName('');
-                    setPassword('');
-                }
+        apiUtils.getItems(`users`, `username=${userName}&website=${password}`).then((data) => {
+            if (data.length > 0) {
+                login({
+                    id: data[0].id,
+                    name: data[0].name,
+                    email: data[0].email
+                });
+                navigate(`/home/users/${data[0].id}`);
+            }
+            else {
+                setErrorMessage("try Again");
+                setUserName('');
+                setPassword('');
+            }
 
-            })
+        })
             .catch(error => {
                 console.error('Error:', error);
                 alert('Error: ')

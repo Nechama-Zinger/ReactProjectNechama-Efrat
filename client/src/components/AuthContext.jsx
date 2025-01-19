@@ -4,23 +4,21 @@ export const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [isReady, setIsReady] = useState(false); // דגל שמציין אם הכל מוכן
-
+  const [isReady, setIsReady] = useState(false); 
   useEffect(() => {
     const fetchUserData = async () => {
       const storedUser = localStorage.getItem("user");
       if (storedUser) {
         setUser(JSON.parse(storedUser));
       }
-      setIsReady(true); // לאחר שסיימנו את כל העדכון
+      setIsReady(true); 
     };
 
-    fetchUserData(); // קריאה לפונקציה האסינכרונית
+    fetchUserData(); 
   }, []);
 
-  // אם הפונקציה לא סיימה לעדכן את הנתונים, לא להציג שום דבר
   if (!isReady) {
-    return null; // או אלמנט טעינה
+    return null; 
   }
 
   const login = (userData) => {

@@ -41,7 +41,7 @@ function Todos() {
     }, []);
 
     const handleCheckboxChange = (e, idForUpdate) => {
-        apiUtils.updateItem(idForUpdate, `todos`, { key: 'completed', content: e.target.checked })
+        apiUtils.updateItem(idForUpdate, `todos`, { completed: e.target.checked })
             .then(() => {
                 setTodos((prevContent) =>
                     prevContent.map((todo) =>
@@ -56,7 +56,7 @@ function Todos() {
     };
 
     const handleUpdate = (idForUpdate) => {
-        apiUtils.updateItem(idForUpdate, `todos`, { key: 'title', content: updatedTask })
+        apiUtils.updateItem(idForUpdate, `todos`, { title: updatedTask })
             .then((updatedItem) => {
                 console.log(updatedItem);
                 setTodos((prevTodos) =>
