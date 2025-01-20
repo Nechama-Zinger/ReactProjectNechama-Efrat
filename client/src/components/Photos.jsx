@@ -72,12 +72,15 @@ function Photos() {
       });
   };
   const handleAddPhoto = () => {
+    console.log(albumId);
+    
     const photoData = {
       albumId: albumId,
       title: newPhoto.title,
       url: newPhoto.url,
       thumbnailUrl: newPhoto.url
     };
+    console.log(photoData);
     apiUtils.addItem("photos", photoData).then((newPhoto) => {
       if (newPhoto) setPhotos((prev) => [...prev, newPhoto]);
     });

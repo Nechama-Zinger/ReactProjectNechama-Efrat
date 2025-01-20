@@ -8,7 +8,7 @@ function Navbar() {
 
     return (
         <nav className={styles.navbar}>
-            <div className={styles.userName}>{user.name}</div>
+            <div className={styles.userName}>Hello {user.name}</div>
             <div className={styles.links}>
                 <Link to={`/home/users/${user.id}`} className={styles.link}>Home</Link>
                 <Link to={`/home/users/${user.id}/info`} className={styles.link}>Info</Link>
@@ -22,3 +22,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
