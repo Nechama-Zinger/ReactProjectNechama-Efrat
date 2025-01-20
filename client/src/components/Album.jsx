@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "../styles/Albums.module.css";
+import styles from "../styles/Album.module.css";
 
 function Album({ album, onUpdate, onDelete }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -12,18 +12,18 @@ function Album({ album, onUpdate, onDelete }) {
     };
 
     return (
-        <li>
+        <li className={styles.albumItem}>
             {isEditing ? (
                 <input
                     value={editedTitle}
                     onChange={(e) => setEditedTitle(e.target.value)}
                 />
             ) : (
-                <Link to={`${album.id}/photos`} state={album.title}>
+                <Link to={`${album.id}/photos`} state={album.title} className={styles.albumLink}>
                     {album.title}
                 </Link>
             )}
-            <div className={styles.AlbumActions}>
+            <div className={styles.albumActions}>
                 {isEditing ? (
                     <>
                         <button onClick={handleSave}>Save</button>
@@ -31,7 +31,9 @@ function Album({ album, onUpdate, onDelete }) {
                     </>
                 ) : (
                     <>
-                        <button onClick={() => setIsEditing(true)}>Edit</button>
+                        <button className={styles.editButton} onClick={() => setIsEditing(true)}>
+                            Edit
+                        </button>
                         <button onClick={() => onDelete(album.id)}>Delete</button>
                     </>
                 )}

@@ -37,7 +37,7 @@ function Posts() {
                 .catch((error) => console.error("Error fetching posts:", error));
         };
 
-        if (viewType === "searchUserPosts") {
+        if (viewType == "searchUserPosts") {
             apiUtils.getItems("users", `username=${selectedUser}`)
                 .then((data) => {
                     if (data.length > 0) {
@@ -47,12 +47,11 @@ function Posts() {
                     else {
                         setPosts([]);
                         setError("user not found")
-
                     }
                 })
                 .catch((error) => console.error("Error fetching user:", error));
         } else {
-            condition = viewType === "myPosts" ? `userId=${user.id}` : "";
+            condition = viewType == "myPosts" ? `userId=${user.id}` : "";
             fetchPosts(condition);
         }
     }, [viewType, selectedUser]);
@@ -81,9 +80,9 @@ function Posts() {
 
     const conditionForFilteringBy = (post) => {
         if (searchValue != "" && filterBy != "") {
-            if (filterBy === "title") {
+            if (filterBy == "title") {
                 return post.title.includes(searchValue)
-            } else if (filterBy === "id") {
+            } else if (filterBy == "id") {
                 return post.id == searchValue;
             }
         } else {
@@ -93,15 +92,15 @@ function Posts() {
     };
 
     const handleUpdatePost = () => {
-        const newUpdatedData =Object.fromEntries(
+        const newUpdatedData = Object.fromEntries(
             Object.entries(updatedData).filter(([key, value]) => value !== "")
-          );
+        );
         apiUtils.updateItem(selectedPost.id, "posts", newUpdatedData)
             .then((updatedPost) => {
                 if (updatedPost) {
                     console.log(updatedPost);
                     setPosts((prev) =>
-                        prev.map((post) => (post.id === selectedPost.id ? updatedPost : post))
+                        prev.map((post) => (post.id == selectedPost.id ? updatedPost : post))
                     );
                     setEditingPost(null)
                     // setUpdatedData({ title: "", body: "" })
@@ -118,13 +117,12 @@ function Posts() {
                     <button onClick={() => { setViewType("myPosts"); setError(""); setSelectedUser("") }}>My Posts</button>
                     <button onClick={() => { setViewType("allPosts"); setError(""); setSelectedUser("") }}>All Posts</button>
                     <label>
-                        <button onClick={() => setViewType("searchUserPosts")}>Select Posts Of Specific User</button>
+                        <button style={{ width: "600px" }} onClick={() => setViewType("searchUserPosts")}>Select Posts Of Specific User</button>
                         <input
                             type="text"
                             placeholder={`Search by user name`}
                             value={selectedUser}
                             onChange={(e) => { setSelectedUser(e.target.value); setError(""); }}
-                            style={{ marginTop: "1rem" }}
                         />
                     </label>
 
@@ -139,38 +137,37 @@ function Posts() {
                                 options={filterOptions}
                             />
                         </label>
-                        {filterBy && (
-                            <input
-                                type="text"
-                                placeholder={`Search by ${filterBy}`}
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
-                                style={{ marginTop: "1rem" }}
-                            />
-                        )}
+                        <input
+                            type="text"
+                            placeholder={`Search by ${filterBy}`}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                        />
                     </div>
                 </div>
 
                 {viewType != "searchUserPosts" &&
                     <div>
                         <h3>Add a Post</h3>
-                        <input
-                            type="text"
-                            placeholder="Title"
-                            value={newPost.title}
-                            onChange={(e) =>
-                                setNewPost((prev) => ({ ...prev, title: e.target.value }))
-                            }
-                        />
-                        <input
-                            type="text"
-                            placeholder="Body"
-                            value={newPost.body}
-                            onChange={(e) =>
-                                setNewPost((prev) => ({ ...prev, body: e.target.value }))
-                            }
-                        />
-                        <button onClick={handleAddPost}>Add Post</button>
+                        <div className={styles.addPost}>
+                            <input
+                                type="text"
+                                placeholder="Title"
+                                value={newPost.title}
+                                onChange={(e) =>
+                                    setNewPost((prev) => ({ ...prev, title: e.target.value }))
+                                }
+                            />
+                            <input
+                                type="text"
+                                placeholder="Body"
+                                value={newPost.body}
+                                onChange={(e) =>
+                                    setNewPost((prev) => ({ ...prev, body: e.target.value }))
+                                }
+                            />
+                            <button onClick={handleAddPost}>Add Post</button>
+                        </div>
                     </div>
                 }
                 <h2>{error}</h2>

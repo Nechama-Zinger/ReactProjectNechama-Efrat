@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../styles/Posts.module.css";
+import styles from "../styles/Post.module.css";
 
 function Post({ post, user, selectedPost, setSelectedPost, editingPost, setEditingPost, handleUpdatePost, handleDeletePost, setUpdatedData }) {
     const navigate = useNavigate();
@@ -14,32 +14,29 @@ function Post({ post, user, selectedPost, setSelectedPost, editingPost, setEditi
 
     return (
         <li
-            key={post.id}
             className={styles.postItem}
             onClick={() => handleSelectPost(post)}
         >
-            <div>
-                <strong>ID:</strong> {post.id} |
-                {isEditing ? (
-                    <input
-                        type="text"
-                        placeholder="Update Title"
-                        defaultValue={post.title}
-                        onChange={(e) => setUpdatedData((prev) => ({ ...prev, title: e.target.value }))}
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                ) : (
-                    <>
-                        <strong>Title:</strong> {post.title}
-                    </>
-                )}
+            <div className={styles.postHeader}>
+                <div>
+                    <strong>ID:</strong> {post.id} | <strong>Title:</strong> {post.title}
+                </div>
             </div>
-            {isSelected &&
+
+            {isSelected && (
                 <div className={styles.postDetails}>
                     {isOwnPost ? (
                         <>
                             {isEditing ? (
                                 <>
+                                    {console.log(isEditing)}
+                                    <input
+                                        type="text"
+                                        placeholder="Update Title"
+                                        defaultValue={post.title}
+                                        onChange={(e) => setUpdatedData((prev) => ({ ...prev, title: e.target.value }))}
+                                        onClick={(e) => e.stopPropagation()}
+                                    />
                                     <input
                                         type="text"
                                         placeholder="Update Body"
@@ -47,45 +44,40 @@ function Post({ post, user, selectedPost, setSelectedPost, editingPost, setEditi
                                         onChange={(e) => setUpdatedData((prev) => ({ ...prev, body: e.target.value }))}
                                         onClick={(e) => e.stopPropagation()}
                                     />
-                                </>
-                            ) : (
-                                <p>{post.body}</p>
-                            )}
-                            <div>
-                                {isEditing ? (
-                                    <>
+                                    <div className={styles.actions}>
                                         <button onClick={(e) => { e.stopPropagation(); handleUpdatePost(); }}>
                                             Save
                                         </button>
                                         <button onClick={(e) => { e.stopPropagation(); setEditingPost(null); }}>
                                             Cancel
                                         </button>
-                                    </>
-                                ) : (
-                                    <>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <p>{post.body}</p>
+                                    <div className={styles.actions}>
                                         <button onClick={(e) => { e.stopPropagation(); setEditingPost(post.id); }}>
-                                            ✏️
+                                            ✏️ Edit
                                         </button>
                                         <button onClick={(e) => { e.stopPropagation(); handleDeletePost(post.id); }}>
                                             Delete
                                         </button>
-                                    </>
-                                )}
-                            </div>
+                                    </div>
+                                </>
+                            )}
                         </>
                     ) : (
                         <p>{post.body}</p>
                     )}
                     <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`${post.id}/comments`, { state: post });
-                        }}
+                        className={styles.closeButton}
+                        onClick={() => navigate(`${post.id}/comments`, { state: post })}
                     >
                         View Comments
                     </button>
                 </div>
-            }
+            )}
         </li>
     );
 }

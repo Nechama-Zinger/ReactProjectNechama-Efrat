@@ -1,97 +1,117 @@
+/* עיצוב כללי לרשימת האלבומים */
 .container {
-    padding: 20px;
     max-width: 800px;
-    margin: 0 auto;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 10px;
+    padding: 1rem;
     background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+.albumItem {
+    background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
+    /* margin: auto; */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+   
 }
 
-.albumsList {
-    list-style-type: none;
-    padding: 0;
+/* כאשר המקש מופעל, האלבום מזזז טיפה */
+.albumItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.albumItem {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    position: relative;
-}
-
-.albumItem h4 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
+/* כותרת אלבום */
+.albumHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 500;
     color: #333;
 }
 
-.albumItem p {
-    margin: 5px 0;
-    font-size: 1rem;
-    color: #666;
-}
-
-.albumActions {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-}
-
-.albumActions button {
-    padding: 8px 12px;
-    border: none;
+/* כפתור ההוספה */
+.addAlbumButton {
     background-color: #007bff;
-    color: white;
+    color: #fff;
+    border: none;
     border-radius: 4px;
+    padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 0.9rem;
+    transition: background-color 0.3s ease;
 }
 
-.albumActions button:hover {
+/* שינוי צבע כפתור ההוספה בעת ריחוף */
+.addAlbumButton:hover {
     background-color: #0056b3;
 }
 
-.albumActions button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
+/* כפתורי פעולה כמו עריכה ומחיקה */
+.albumActions {
+    display: flex;
+    justify-content:center;
+    gap: 1rem;
 }
 
-.addAlbum {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-.addAlbum h3 {
-    margin: 0 0 10px;
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.addAlbum textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: none;
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
-.addAlbum button {
-    padding: 8px 12px;
-    border: none;
+.albumActions button {
     background-color: #28a745;
     color: white;
+    border: none;
     border-radius: 4px;
+    padding: 0.4rem 1rem;
     cursor: pointer;
     font-size: 0.9rem;
+    transition: background-color 0.3s ease;
 }
 
-.addAlbum button:hover {
+/* שינוי צבעים כשמעבירים מעל כפתורי פעולה */
+.albumActions button:hover {
     background-color: #218838;
+}
+
+/* עיצוב הקטגוריה והחיפוש */
+.searchWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* margin-bottom: 1.5rem; */
+}
+
+.searchWrapper label {
+    font-weight: 600;
+}
+
+.searchWrapper input {
+    padding: 0.5rem;
+    /* margin-top: 1rem; */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* עיצוב עבור כפתור הוספה */
+.addAlbumWrapper {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    /* flex-direction: column; */
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.addAlbumWrapper input {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }

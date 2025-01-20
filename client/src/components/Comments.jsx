@@ -9,18 +9,11 @@ function Comments() {
   const { postId } = useParams();
   const { user } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
-  // const [postDetails, setPostDetails] = useState(null);
   const [newComment, setNewComment] = useState({ title: "", body: "" });
   const [editingComment, setEditingComment] = useState(null);
   const apiUtils = new ApiUtils();
   const location = useLocation();
   useEffect(() => {
-    // apiUtils.getItems(`posts`, `id=${postId}`).then((data) => {
-    //   if (data && data.length > 0) {
-    //     setPostDetails(data[0]);
-    //   }
-    // });
-
     apiUtils.getItems("comments", `postId=${postId}`).then((data) => {
       setComments(data || []);
     });
@@ -64,20 +57,11 @@ function Comments() {
       <Navbar />
 
       <div className={styles.container}>
-        <h2>Comments for Post </h2>
-
-        <div className={styles.postDetails}>
-          <h3>{location.state.title}</h3>
-          <p>{location.state.body}</p>
+        <h2>Comments for Post:</h2>
+        <div>
+         <h2 style={{color:'blue'}}>{location.state.title}</h2> 
+         <p>{location.state.body}</p>
         </div>
-
-        {/* {postDetails && (
-          <div className={styles.postDetails}>
-            <h3>{postDetails.title}</h3>
-            <p>{postDetails.body}</p>
-          </div>
-        )} */}
-
         <ul className={styles.commentsList}>
           {comments.map((comment) => (
             <li key={comment.id} className={styles.commentItem}>

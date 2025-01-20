@@ -1,0 +1,69 @@
+/* עיצוב כללי עבור אלבום */
+.albumItem {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* כאשר המקש מופעל, האלבום מזזז טיפה */
+.albumItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* עיצוב כפתורי פעולה */
+.albumActions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.albumActions button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+/* שינוי צבעים כשמעבירים מעל כפתורי פעולה */
+.albumActions button:hover {
+    background-color: #218838;
+}
+
+/* עיצוב קישור אלבום */
+.albumLink {
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.albumLink:hover {
+    text-decoration: underline;
+}
+
+/* עיצוב עבור כפתור עריכה */
+.editButton {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.editButton:hover {
+    background-color: #e0a800;
+}

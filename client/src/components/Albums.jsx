@@ -4,8 +4,7 @@ import { ApiUtils } from "../utils/apiUtils";
 import { AuthContext } from "./AuthContext";
 import Select from "react-select";
 import Album from "./Album.jsx";
-
-// import styles from "./Albums.module.css";
+import styles from "../styles/Albums.module.css";
 
 function Albums() {
     const [albums, setAlbums] = useState([]);
@@ -63,38 +62,41 @@ function Albums() {
     return (
         <>
             <Navbar />
-            <div>
-                <h2>Albums</h2>
-                <label>
-                    Search:
-                    <Select
-                        options={filterOptions}
-                        onChange={(e) => {
-                            setFilterBy(e.value);
-                            setSearchValue("");
-                        }}
-                        defaultValue={filterOptions.find((option) => option.value === filterBy)}
-                    />
-                    {filterBy && (
-                        <input
-                            placeholder={`Search by ${filterBy}`}
-                            type="text"
-                            value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
-                            style={{ marginTop: "1rem" }}
+            <div className={styles.container}>
+                <div className={styles.searchWrapper}>
+                    <h2>Albums</h2>
+                    <label>
+                        Search:
+                        <Select
+                            options={filterOptions}
+                            onChange={(e) => {
+                                setFilterBy(e.value);
+                                setSearchValue("");
+                            }}
+                            defaultValue={filterOptions.find((option) => option.value === filterBy)}
                         />
-                    )}
-                </label>
-                <div>
-                    <h3>Add an Album</h3>
+                            <input
+                                placeholder={`Search by ${filterBy}`}
+                                type="text"
+                                value={searchValue}
+                                onChange={(e) => setSearchValue(e.target.value)}
+                            />
+                    </label>
+                </div>
+
+                <div className={styles.addAlbumWrapper}>
+                    <h3>Add an Album:</h3>
                     <input
                         type="text"
-                        placeholder="Title"
+                        placeholder="Album Title"
                         value={newAlbum}
                         onChange={(e) => setNewAlbum(e.target.value)}
                     />
-                    <button onClick={handleAddAlbum}>Add Album</button>
+                    <button className={styles.addAlbumButton} onClick={handleAddAlbum}>
+                        Add Album
+                    </button>
                 </div>
+
                 <ul>
                     {albums.filter(conditionForFilteringBy).map((album) => (
                         <Album

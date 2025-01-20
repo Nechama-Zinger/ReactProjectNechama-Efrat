@@ -1,112 +1,150 @@
 .container {
-    padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  margin-top: 100px;
+  margin-bottom: 10px;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .filters {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filters button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filters button:hover {
+  background-color: #0056b3;
+}
+
+.filters input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  /* width: 100%; */
 }
 
 .searchFilter {
-    margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.addPost {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.addPost>button {
+  background-color: #28a745;
+  color: white;
+}
+
+.searchFilter label {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.addSection {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.addSection input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.addSection button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.addSection button:hover {
+  background-color: #218838;
 }
 
 .postList {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .postItem {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    /* display: flex; */
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-bottom: 0.5rem;
 }
 
-.modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+.postItem h4 {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+  flex: 1;
 }
 
-.modal {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 50%;
-    max-width: 600px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    position: relative;
+.postItem p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+  flex: 2;
 }
 
-.closeButton {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-.postItem {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    transition: background-color 0.3s, box-shadow 0.3s;
+.postItem .actions {
+  display: flex;
+  gap: 0.5rem;
 }
 
-.postItem:hover {
-    background-color: #f0f0f0;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+.postItem button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.postMine {
-    background-color: #e3f2fd; /* כחול בהיר לפוסטים של המשתמש */
-    border-color: #90caf9;
+.postItem button:hover {
+  background-color: #d43f3f;
 }
 
-.postMine:hover {
-    background-color: #bbdefb; /* כחול בהיר יותר בעת ריחוף */
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+label {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0px;
 }
-
-.postDetails {
-    margin-top: 10px;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-    font-size: 0.9rem;
-    color: #555;
-}
-
-button {
-    margin: 5px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #eee;
-}
-
-button:active {
-    background-color: #ddd;
-}
-
