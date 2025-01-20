@@ -102,8 +102,8 @@ function Albums() {
                         <Album
                             key={album.id}
                             album={album}
-                            onUpdate={handleUpdateAlbum}
-                            onDelete={handleDeleteAlbum}
+                            handleUpdateAlbum={handleUpdateAlbum}
+                            handleDeleteAlbum={handleDeleteAlbum}
                         />
                     ))}
                 </ul>

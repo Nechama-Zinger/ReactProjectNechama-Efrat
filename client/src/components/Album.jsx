@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/Album.module.css";
 
-function Album({ album, onUpdate, onDelete }) {
+function Album({ album, handleUpdateAlbum, handleDeleteAlbum }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editedTitle, setEditedTitle] = useState(album.title);
 
     const handleSave = () => {
-        onUpdate(album.id, editedTitle);
+        handleUpdateAlbum(album.id, editedTitle);
         setIsEditing(false);
     };
 
@@ -31,10 +31,8 @@ function Album({ album, onUpdate, onDelete }) {
                     </>
                 ) : (
                     <>
-                        <button className={styles.editButton} onClick={() => setIsEditing(true)}>
-                            Edit
-                        </button>
-                        <button onClick={() => onDelete(album.id)}>Delete</button>
+                        <button className={styles.editButton} onClick={() => setIsEditing(true)}> Edit</button>
+                        <button onClick={() => handleDeleteAlbum(album.id)}>Delete</button>
                     </>
                 )}
             </div>

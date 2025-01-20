@@ -18,7 +18,6 @@ function Posts() {
     const [filterBy, setFilterBy] = useState("");
     const [error, setError] = useState("");
     const [editingPost, setEditingPost] = useState(null);
-
     const [newPost, setNewPost] = useState({ title: "", body: "" });
     const apiUtils = new ApiUtils();
 
@@ -54,9 +53,7 @@ function Posts() {
             condition = viewType == "myPosts" ? `userId=${user.id}` : "";
             fetchPosts(condition);
         }
-    }, [viewType, selectedUser]);
-
-
+    }, [viewType]);
 
     const handleAddPost = () => {
         const postData = {
@@ -73,7 +70,6 @@ function Posts() {
     const handleDeletePost = (postId) => {
         apiUtils.deleteItem("posts", postId)
             .then(() => {
-
                 setPosts((prev) => prev.filter((post) => post.id !== postId));
             });
     };
@@ -103,7 +99,6 @@ function Posts() {
                         prev.map((post) => (post.id == selectedPost.id ? updatedPost : post))
                     );
                     setEditingPost(null)
-                    // setUpdatedData({ title: "", body: "" })
                 }
             });
     }

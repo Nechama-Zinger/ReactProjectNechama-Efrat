@@ -11,7 +11,7 @@ function Info() {
     fetch(`http://localhost:3000/users?id=${user.id}`)
       .then((response) => response.json())
       .then((data) => setInfo(data[0]));
-  }, [user.id]);
+  }, []);
 
   const renderValue = (key, value) => {
     if (typeof value === "object" && value !== null) {

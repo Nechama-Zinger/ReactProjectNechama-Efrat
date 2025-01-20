@@ -18,7 +18,7 @@ function LogIn() {
             if (data.length > 0) {
                 login({
                     id: data[0].id,
-                    name: data[0].name,
+                    name: data[0].username,
                     email: data[0].email
                 });
                 navigate(`/home/users/${data[0].id}`);
@@ -38,6 +38,7 @@ function LogIn() {
 
     return (
         <>
+            <h2>Log In</h2>
             <form className={styles.loginForm} onSubmit={handleLogIn}>
                 <div className={styles.formGroup}>
                     <label>Name: </label>

@@ -1,10 +1,8 @@
-// import React, { useState, useEffect } from "react";
-
-
 export class ApiUtils {
   constructor() {
     this.baseUrl = 'http://localhost:3000';
   }
+
   getItems = (category, condition = '') => {
     return fetch(`${this.baseUrl}/${category}?${condition}`)
       .then((response) => {
@@ -15,18 +13,18 @@ export class ApiUtils {
       })
       .then((data) => {
         console.log(data);
-        return data; // החזרת הנתונים
+        return data;
       })
       .catch((error) => {
         console.error("Error fetching items:", error);
-        // throw error; // העברת השגיאה למי שקורא לפונקציה
+        throw error;
       });
-    }
-      
+  }
+
   deleteItem = (category, idForDelete) => {
     return fetch(`${this.baseUrl}/${category}/${idForDelete}`, {
       method: "DELETE",
-        })
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Failed to delete item with ID ${idForDelete}`);
@@ -37,8 +35,8 @@ export class ApiUtils {
 
       })
       .catch((error) => {
-        throw new Error(error)
-        // console.error("Error during deletion:", error);
+        console.error("Error deleting:", error);
+        throw error
       });
   };
 
@@ -54,18 +52,18 @@ export class ApiUtils {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.json(); // מחזירים את ה-Promise מה-JSON
+        return response.json();
       })
       .then((data) => {
         console.log(`Item with ID ${idForUpdate} updated successfully`);
-        return data; // מחזירים את ה-data (הפריט המעודכן)
+        return data;
       })
       .catch((error) => {
         console.error("Error updating:", error);
-        throw error; // חשוב לזרוק את השגיאה מחדש כדי שה-catch יתפוס אותה
+        throw error;
       });
   };
-  
+
 
   addItem = (category, item) => {
     return fetch(`${this.baseUrl}/${category}`, {
@@ -87,7 +85,7 @@ export class ApiUtils {
       })
       .catch((error) => {
         console.error('Error adding item:', error);
-        throw error; // חשוב לזרוק את השגיאה מחדש כדי שה-catch יתפוס אותה
+        throw error;
       });
   };
 }

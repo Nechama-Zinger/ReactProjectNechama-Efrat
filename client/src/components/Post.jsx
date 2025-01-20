@@ -13,10 +13,7 @@ function Post({ post, user, selectedPost, setSelectedPost, editingPost, setEditi
     };
 
     return (
-        <li
-            className={styles.postItem}
-            onClick={() => handleSelectPost(post)}
-        >
+        <li className={styles.postItem} onClick={() => handleSelectPost(post)} >
             <div className={styles.postHeader}>
                 <div>
                     <strong>ID:</strong> {post.id} | <strong>Title:</strong> {post.title}

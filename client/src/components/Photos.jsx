@@ -114,14 +114,14 @@ function Photos() {
         <h2>{location.state}</h2>
         <h3>Photos</h3>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+        <div  className={styles.singlePhoto}>
           {photos.map((photo) => (
             // key={`photo.${photo.id}`}
             <div  style={{ width: "200px", textAlign: "center" }}>
               <img
-                //  src={photo.thumbnailUrl}
-                src={'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Anemone-coronaria-2016-Zachi-Evenor.jpg/800px-Anemone-coronaria-2016-Zachi-Evenor.jpg'}
-                alt={photo.title}
+                 src={photo.thumbnailUrl}
+                // src={'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Anemone-coronaria-2016-Zachi-Evenor.jpg/800px-Anemone-coronaria-2016-Zachi-Evenor.jpg'}
+                // alt={photo.title}
                 style={{ width: "100%", borderRadius: "8px" }}
               />
               {editingPhoto === photo.id ? (

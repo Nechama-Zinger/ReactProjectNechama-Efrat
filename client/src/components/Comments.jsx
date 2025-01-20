@@ -13,6 +13,7 @@ function Comments() {
   const [editingComment, setEditingComment] = useState(null);
   const apiUtils = new ApiUtils();
   const location = useLocation();
+
   useEffect(() => {
     apiUtils.getItems("comments", `postId=${postId}`).then((data) => {
       setComments(data || []);
@@ -59,37 +60,34 @@ function Comments() {
       <div className={styles.container}>
         <h2>Comments for Post:</h2>
         <div>
-         <h2 style={{color:'blue'}}>{location.state.title}</h2> 
-         <p>{location.state.body}</p>
+          <h2 style={{ color: 'blue' }}>{location.state.title}</h2>
+          <p>{location.state.body}</p>
         </div>
         <ul className={styles.commentsList}>
           {comments.map((comment) => (
             <li key={comment.id} className={styles.commentItem}>
               {editingComment === comment.id ? (
-                <><input
-                  value={comment.name}
-                  onChange={(e) =>
-                    setComments((prev) =>
-                      prev.map((c) =>
-                        c.id === comment.id ? { ...c, name: e.target.value } : c
-                      )
-                    )
-                  }
-                />
-                <br/>
+                <>
+                  <input
+                    value={comment.name}
+                    onChange={(e) =>
+                      setComments((prev) =>
+                        prev.map((c) =>
+                          c.id === comment.id ? { ...c, name: e.target.value } : c
+                        ))
+                    }
+                  />
+                  <br />
                   <input
                     value={comment.body}
                     onChange={(e) =>
                       setComments((prev) =>
                         prev.map((c) =>
                           c.id === comment.id ? { ...c, body: e.target.value } : c
-                        )
-                      )
+                        ) )
                     }
                   />
                 </>
-
-
               ) : (
                 <>
                   <h4>{comment.name}</h4>

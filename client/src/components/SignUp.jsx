@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import styles from '../styles/SignUp.module.css';
-// import ContinuationRegistration from '../ContinuationRegistration/ContinuationRegistration'
 import ContinuationRegistration from './ContinuationRegistration'
 import { ApiUtils } from "../utils/apiUtils";
 
@@ -39,6 +38,7 @@ function SignUp() {
 
     return (
         showRegistration ? <>
+            <h2>Sign Up</h2>
             <form onSubmit={handleSignUp} className={styles.loginForm}>
                 <div className={styles.formGroup}>
                     <label className={styles.label}>User Name: </label>

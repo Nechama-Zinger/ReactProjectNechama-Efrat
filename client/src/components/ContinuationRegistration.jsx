@@ -1,4 +1,4 @@
-import { useState, useContext} from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/ContinuationRegistration.module.css';
 import { AuthContext } from "./AuthContext";
@@ -7,7 +7,6 @@ import { ApiUtils } from "../utils/apiUtils";
 function ContinuationRegistration(props) {
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
-    // const [errorMessage, setErrorMessage] = useState('');
     const apiUtils = new ApiUtils();
 
     const [userData, setUserData] = useState({
@@ -46,13 +45,14 @@ function ContinuationRegistration(props) {
 
     const handleSignUp = (e) => {
         e.preventDefault();
-        apiUtils.addItem("users",userData)         
+        apiUtils.addItem("users", userData)
             .then(data => {
                 console.log('Success:', data);
                 login({
                     id: data.id,
                     name: data.name,
-                    email: data.email});
+                    email: data.email
+                });
                 navigate(`/home/users/${data.id}`);
             })
             .catch((error) => {
@@ -62,6 +62,7 @@ function ContinuationRegistration(props) {
 
     return (
         <>
+            <h2>Finish Registration</h2>
             <form onSubmit={handleSignUp} className={styles.loginForm}>
                 <div className={styles.formGroup}>
                     <label className={styles.label}>Name:</label>
@@ -91,10 +92,7 @@ function ContinuationRegistration(props) {
                 <button type="submit" className={styles.loginButton}>Sign Up</button>
             </form>
             <Link to="/login" className={styles.loginLink}> Have an account? Log in</Link>
-            {/* <div className={styles.errorMessage}>{errorMessage}</div> */}
-
         </>
-
     );
 }
 

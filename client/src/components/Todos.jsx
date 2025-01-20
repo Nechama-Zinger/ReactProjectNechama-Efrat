@@ -13,12 +13,12 @@ function Todos() {
     const [sortBy, setSortBy] = useState("");
     const [isEditing, setIsEditing] = useState(null);
     const [filterBy, setFilterBy] = useState("");
+    const apiUtils = new ApiUtils();
     const [newTask, setNewTask] = useState({
         userId: user.id,
         title: '',
         completed: false
     });
-    const apiUtils = new ApiUtils();
 
     const sortOptions = [
         { value: "title", label: "Title" },
@@ -39,29 +39,13 @@ function Todos() {
         });
     }, []);
 
-    const handleCheckboxChange = (e, idForUpdate) => {
-        apiUtils.updateItem(idForUpdate, `todos`, { completed: e.target.checked })
-            .then((updatedItem) => {
-                setTodos((prevContent) =>
-                    prevContent.map((todo) =>
-                        todo.id == idForUpdate ? updatedItem : todo
-                    )
-                );
-            })
-            .catch((error) => {
-                console.error("Error updating item:", error);
-                alert("Failed to update item. Please try again.");
-            });
-    };
-
-    const handleUpdate = (idForUpdate) => {
-        apiUtils.updateItem(idForUpdate, `todos`, { title: updatedTask })
+    const handleUpdate = (idForUpdate,objectToUpdate) => {
+        apiUtils.updateItem(idForUpdate, `todos`, objectToUpdate)
             .then((updatedItem) => {
                 setTodos((prevTodos) =>
                     prevTodos.map((todo) =>
                         todo.id == idForUpdate ? updatedItem : todo
-                    )
-                );
+                    ));
                 setIsEditing(null);
             })
             .catch((error) => {
@@ -70,8 +54,9 @@ function Todos() {
     };
 
     const handleDelete = (idForDelete) => {
-        apiUtils.deleteItem(`todos`, idForDelete);
-        setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== idForDelete));
+        apiUtils.deleteItem(`todos`, idForDelete).then(() => {
+            setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== idForDelete));
+        });
     };
 
     const handleAddition = () => {
@@ -79,7 +64,7 @@ function Todos() {
             apiUtils.addItem(`todos`, newTask)
                 .then((newItem) => {
                     setTodos((prevTodos) => [...prevTodos, newItem]);
-                    setNewTask({ ...newTask, title: ''})
+                    setNewTask({ ...newTask, title: '' })
                 })
                 .catch((error) => {
                     console.error("Error adding item:", error);
@@ -174,7 +159,6 @@ function Todos() {
                     )}
                 </div>
 
-
                 <div className={styles.addSection}>
                     <input
                         type="text"
@@ -184,6 +168,7 @@ function Todos() {
                     />
                     <button onClick={handleAddition}>Add Task</button>
                 </div>
+
                 <ul className={styles.list}>
                     {todos
                         .filter(conditionForFilteringBy)
@@ -193,13 +178,13 @@ function Todos() {
                                 <input
                                     type="checkbox"
                                     checked={todo.completed}
-                                    onChange={(e) => handleCheckboxChange(e, todo.id)}
+                                    onChange={(e) => handleUpdate(todo.id, { completed: e.target.checked })}
                                 />
                                 <strong>ID:</strong> {todo.id} |
                                 {isEditing == todo.id ? (
                                     <input
                                         type="text"
-                                        value={todo.title}
+                                        defaultValue={todo.title}
                                         onChange={(e) => setUpdatedTask(e.target.value)}
                                     />
                                 ) : (
@@ -208,7 +193,7 @@ function Todos() {
                                 <div>
                                     {isEditing == todo.id ? (
                                         <>
-                                            <button onClick={() => handleUpdate(todo.id)}>Save</button>
+                                            <button onClick={() => handleUpdate(todo.id,{ title: updatedTask })}>Save</button>
                                             <button onClick={() => setIsEditing(null)}>Cancel</button>
                                         </>
                                     ) : (
